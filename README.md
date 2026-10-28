@@ -2,8 +2,8 @@
 
 > **Academic Level:** Third-Year B.Tech AI / ML Major Coursework Project  
 > **Authors:** AI/ML Engineering Team  
-> **Live Demo Website:** [https://smart-irrigation-frontend.vercel.app](https://smart-irrigation-frontend.vercel.app) *(Replace with your live Vercel URL)*  
-> **GitHub Repository:** [https://github.com/udaysharmadev/smart-irrigation](https://github.com/udaysharmadev/smart-irrigation)  
+> **Live Demo Website:** [https://smart-irrigation-frontend-murex.vercel.app](https://smart-irrigation-frontend-murex.vercel.app)  
+> **GitHub Repository:** [https://github.com/pranayb408/smart-irrigation](https://github.com/pranayb408/smart-irrigation)  
 > **Supported Languages:** 🇬🇧 English | 🇮🇳 हिन्दी (Hindi) | 🇮🇳 मराठी (Marathi) | 🇮🇳 ગુજરાતી (Gujarati)  
 > **Full Stack Architecture:** React 18 (Vite) + FastAPI (Uvicorn) + Neon PostgreSQL / SQLite + Scikit-learn + FAO-56 Agronomic Physics Engine
 

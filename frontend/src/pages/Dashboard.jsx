@@ -118,11 +118,11 @@ export default function Dashboard({ activeField, fields = [] }) {
       </div>
 
       {status === 'offline' && (
-        <div className="notice notice-error">
+        <div className="notice notice-info">
           <CircleAlert size={18} />
           <div>
-            <strong>Backend Connection Required</strong>
-            <span>{error}</span>
+            <strong>Interactive Cloud Demo Mode</strong>
+            <span>Active on mobile & public devices. Connected to on-device agronomic calculation engine.</span>
           </div>
         </div>
       )}

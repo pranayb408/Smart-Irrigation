@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: smart-irrigation-backend
+    runtime: python
+    buildCommand: "pip install -r requirements.txt && python -m ml.generate_data && python -m ml.evaluate"
+    startCommand: "uvicorn backend.main:app --host 0.0.0.0 --port $PORT"
+    plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: DATABASE_URL
+        sync: false
+      - key: CORS_ORIGINS
+        value: "http://localhost:5173,http://127.0.0.1:5173,https://*.vercel.app,*"
+      - key: MODEL_DIR
+        value: "ml/saved_models"
+      - key: DATASET_PATH
+        value: "data/sample_sensor_data.csv"

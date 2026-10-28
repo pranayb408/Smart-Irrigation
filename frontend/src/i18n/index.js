@@ -51,3 +51,4 @@ export const changeLanguage = (langCode) => {
 };
 
 export default i18n;
+

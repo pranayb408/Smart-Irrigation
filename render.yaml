@@ -16,3 +16,4 @@ services:
         value: "ml/saved_models"
       - key: DATASET_PATH
         value: "data/sample_sensor_data.csv"
+

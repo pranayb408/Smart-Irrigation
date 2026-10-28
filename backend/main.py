@@ -14,7 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 import uvicorn
 from backend.database import init_db, engine
-from backend.routes import predictions, sensors, analytics, fields, water_budget
+from backend.routes import predictions, sensors, analytics, fields, water_budget, crops
 
 
 @asynccontextmanager
@@ -63,6 +63,7 @@ app.include_router(sensors.router)
 app.include_router(predictions.router)
 app.include_router(water_budget.router)
 app.include_router(analytics.router)
+app.include_router(crops.router)
 
 
 @app.get("/", tags=["System"])
@@ -91,7 +92,7 @@ def health():
         "status": "healthy",
         "database": db_status,
         "ml_models": "loaded on demand",
-        "modules": ["fields", "sensors_iot", "decision_support", "water_budget", "analytics"],
+        "modules": ["fields", "sensors_iot", "decision_support", "water_budget", "analytics", "ai_crop_doctor"],
     }
 
 

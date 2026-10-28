@@ -9,6 +9,7 @@ import WaterBudget from './pages/WaterBudget.jsx';
 import Analytics from './pages/Analytics.jsx';
 import SensorHistory from './pages/SensorHistory.jsx';
 import Settings from './pages/Settings.jsx';
+import CropDoctor from './pages/CropDoctor.jsx';
 import { api } from './services/api.js';
 
 export default function App() {
@@ -55,6 +56,7 @@ export default function App() {
               path="/budget"
               element={<WaterBudget activeField={activeField} />}
             />
+            <Route path="/crop-doctor" element={<CropDoctor />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/history" element={<SensorHistory />} />
             <Route path="/settings" element={<Settings />} />

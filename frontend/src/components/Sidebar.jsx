@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   Sprout, LayoutDashboard, Layers, BrainCircuit, Droplets,
-  BarChart3, Activity, Settings, ChevronLeft
+  BarChart3, Activity, Settings, ChevronLeft, Stethoscope
 } from 'lucide-react';
 
 export default function Sidebar({ open, onClose }) {
@@ -12,6 +12,7 @@ export default function Sidebar({ open, onClose }) {
     { to: '/', label: t('nav.overview', 'Overview'), icon: LayoutDashboard, end: true },
     { to: '/fields', label: t('nav.fields', 'Fields & Farm Setup'), icon: Layers },
     { to: '/prediction', label: t('nav.prediction', 'Decision Support'), icon: BrainCircuit, tag: t('nav.aiTag', 'AI') },
+    { to: '/crop-doctor', label: t('nav.cropDoctor', 'AI Crop Doctor'), icon: Stethoscope, tag: t('nav.aiTag', 'AI') },
     { to: '/budget', label: t('nav.budget', 'Water Budget & Logs'), icon: Droplets },
     { to: '/analytics', label: t('nav.analytics', 'Water Analytics'), icon: BarChart3 },
     { to: '/history', label: t('nav.sensors', 'Sensors & IoT'), icon: Activity },

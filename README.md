@@ -203,8 +203,8 @@ smart-irrigation/
 │   ├── public/                 # Static web assets
 │   ├── src/
 │   │   ├── components/         # Sidebar, Header, StatCard, Panel, MoistureChart
-│   │   ├── pages/              # Dashboard, Prediction, Analytics, SensorHistory, Settings, Fields, WaterBudget
-│   │   ├── services/api.js     # Unified Axios HTTP API client
+│   │   ├── pages/              # Dashboard, Prediction, Analytics, SensorHistory, Settings, Fields, WaterBudget, CropDoctor
+│   │   ├── services/api.js     # Unified Axios HTTP API client & resilient on-device fallback engine
 │   │   ├── App.jsx             # React router setup & field state
 │   │   ├── index.css           # Custom theme & typography styling
 │   │   └── main.jsx            # React root mount
@@ -226,6 +226,7 @@ smart-irrigation/
 ├── tests/
 │   ├── test_agronomic.py       # ET0 and depletion physics tests
 │   ├── test_api.py             # FastAPI health & CRUD tests
+│   ├── test_crops.py           # AI Crop Doctor & image diagnostic tests
 │   ├── test_dataset.py         # CSV ranges and schema integrity tests
 │   ├── test_fields.py          # Field registration & deletion tests
 │   ├── test_integration_workflow.py # Full-stack Phase 5 end-to-end integration tests
@@ -354,6 +355,9 @@ $1\text{ m}^2 \times 0.001\text{ m} = 0.001\text{ m}^3 = 1\text{ Liter}$.
 | `POST` | `/api/irrigation-logs` | Record an applied irrigation event |
 | `GET` | `/api/analytics` | Retrieve crop usage, field averages, and sensor time-series |
 | `GET` | `/api/model-metrics` | Retrieve verified held-out ML evaluation metrics |
+| `POST` | `/api/crops/diagnose` | Run AI crop foliage disease & pest diagnosis from Base64 image with smart irrigation advice |
+| `POST` | `/api/crops/upload-diagnose` | Direct multipart photo upload for crop health diagnostics |
+| `GET` | `/api/crops/knowledge-base` | Retrieve supported crops, fungal/pest disease catalogue & treatment rules |
 
 ---
 

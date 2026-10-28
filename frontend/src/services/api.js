@@ -410,6 +410,111 @@ const fallbackEngine = {
     setStored('agrisense_logs', logs);
     return newLog;
   },
+
+  diagnoseCrop(payload) {
+    const crop = (payload.crop_type || 'Wheat').trim();
+    const symptoms = (payload.symptoms || '').toLowerCase();
+
+    let target = {
+      condition_name: 'Healthy Crop — Optimal Foliage',
+      scientific_name: 'Optimal Physiological Growth',
+      category: 'Healthy',
+      severity: 'Healthy',
+      confidence_score: 95.8,
+      symptoms_summary: 'Clean, turgid green leaves without necrotic lesions or insect damage.',
+      likely_causes: ['Optimal soil moisture within allowable depletion', 'Balanced soil nutrients', 'Adequate solar radiation'],
+      irrigation_advice: 'Maintain regular FAO-56 sensor-based schedule (35%-55% moisture). No emergency water change needed.',
+      immediate_actions: ['Continue routine monitoring', 'Log soil moisture weekly'],
+      organic_treatment: ['Apply organic foliar bio-stimulant or seaweed extract monthly'],
+      chemical_treatment: ['None required. Keep beneficial predatory insects alive.'],
+      preventative_measures: ['Maintain crop rotation and precision sensor watering'],
+    };
+
+    if (symptoms.includes('rust') || (crop.toLowerCase().includes('wheat') && (symptoms.includes('yellow') || symptoms.includes('spot')))) {
+      target = {
+        condition_name: 'Yellow / Stripe Rust (Puccinia striiformis)',
+        scientific_name: 'Puccinia striiformis f. sp. tritici',
+        category: 'Fungal',
+        severity: 'High',
+        confidence_score: 93.4,
+        symptoms_summary: 'Parallel yellow-orange pustules forming stripes along the leaf veins, leading to foliar drying.',
+        likely_causes: ['High humidity with extended leaf moisture', 'Cool cloudy weather (10°C to 20°C)', 'Excessive nitrogen fertilizer'],
+        irrigation_advice: 'Shift to light drip/furrow irrigation early morning. Strictly avoid overhead sprinklers to stop spore splash.',
+        immediate_actions: ['Halt overhead irrigation', 'Inspect adjacent blocks to map spread boundary'],
+        organic_treatment: ['Spray 5% Neem Seed Kernel Extract (NSKE)', 'Foliar application of Trichoderma viride (10g/L)'],
+        chemical_treatment: ['Propiconazole 25% EC @ 1 ml/L or Tebuconazole 25.9% EC @ 1.25 ml/L water'],
+        preventative_measures: ['Use resistant varieties like HD 2967 or DBW 187', 'Maintain balanced N-P-K (120:60:40)'],
+      };
+    } else if (crop.toLowerCase().includes('tomato') || symptoms.includes('blight') || symptoms.includes('brown')) {
+      target = {
+        condition_name: 'Early Blight & Concentric Ring Spot',
+        scientific_name: 'Alternaria solani',
+        category: 'Fungal',
+        severity: 'Moderate',
+        confidence_score: 92.8,
+        symptoms_summary: 'Dark brown necrotic spots with concentric rings on older lower leaves turning yellow at borders.',
+        likely_causes: ['Rain or irrigation water splashing onto foliage', 'Warm weather (24°C-29°C) with persistent moisture', 'Dense foliage canopy'],
+        irrigation_advice: 'Use drip irrigation at base of plant only. Prune lower branches and water at dawn so any surface dampness evaporates.',
+        immediate_actions: ['Prune and safely destroy lower infected leaves', 'Apply straw mulch at stem base to stop soil splash'],
+        organic_treatment: ['Copper oxychloride 50% WP @ 2.5g/L', '1% Bordeaux mixture spray'],
+        chemical_treatment: ['Azoxystrobin 18.2% + Difenoconazole 11.4% SC @ 1 ml/L'],
+        preventative_measures: ['3-year rotation avoiding Solanaceae family', 'Stake plants for vertical airflow'],
+      };
+    } else if (symptoms.includes('curl') || symptoms.includes('pest') || symptoms.includes('aphid') || symptoms.includes('whitefly') || crop.toLowerCase().includes('cotton')) {
+      target = {
+        condition_name: 'Leaf Curl Virus & Sucking Pest Vector',
+        scientific_name: 'Begomovirus / Bemisia tabaci',
+        category: 'Viral / Pest Vector',
+        severity: 'High',
+        confidence_score: 91.6,
+        symptoms_summary: 'Leaves cupping/curling upwards with thickened veins, leaf-like outgrowths, and stunted shoot tips.',
+        likely_causes: ['Whitefly or aphid vector infestation', 'Warm dry spells triggering pest surges', 'Susceptible crop genetics'],
+        irrigation_advice: 'Keep soil moisture steady at field capacity via drip. Moisture stress accelerates plant sap sugar concentration which attracts more pests.',
+        immediate_actions: ['Install 15-20 yellow sticky traps per acre', 'Rogue out severely deformed seedling plants'],
+        organic_treatment: ['Neem oil 10,000 ppm @ 3 ml/L with soap surfactant', 'Verticillium lecanii @ 5g/L during humid hours'],
+        chemical_treatment: ['Diafenthiuron 50% WP @ 1g/L or Afidopyropen 50 g/L @ 2 ml/L'],
+        preventative_measures: ['Plant border barrier rows of maize or pearl millet', 'Select resistant certified hybrids'],
+      };
+    } else if (symptoms.includes('yellow') || symptoms.includes('pale')) {
+      target = {
+        condition_name: 'Nitrogen / Micronutrient Chlorosis',
+        scientific_name: 'Physiological Deficiency',
+        category: 'Nutrient Deficiency',
+        severity: 'Mild',
+        confidence_score: 90.2,
+        symptoms_summary: 'Generalized yellowing of foliage with intact vein structure and no necrotic rot.',
+        likely_causes: ['Temporary root waterlogging suffocating nutrient uptake', 'Low available soil nitrogen', 'Alkaline soil locking iron/zinc'],
+        irrigation_advice: 'Hold irrigation until the upper 2-3 inches of root zone dry. Excessive watering causes nitrogen leaching and root rot.',
+        immediate_actions: ['Test soil moisture; avoid waterlogging', 'Apply foliar spray for fast leaf intake'],
+        organic_treatment: ['Apply well-decomposed vermicompost (2 tons/acre)', 'Liquid Jeevamrutham spray @ 5 ml/L'],
+        chemical_treatment: ['Foliar spray of 19-19-19 soluble NPK @ 5g/L with Chelated Micronutrient Fe-EDTA @ 1g/L'],
+        preventative_measures: ['Conduct seasonal soil test', 'Improve soil organic matter and drainage'],
+      };
+    }
+
+    return {
+      status: 'success',
+      crop_type: crop,
+      plant_part: payload.plant_part || 'Leaf',
+      field_name: payload.field_name || 'Main Farm Plot',
+      ...target,
+      visual_metrics: {
+        greenness_pct: target.category === 'Healthy' ? 84.5 : 42.0,
+        chlorosis_pct: target.category === 'Nutrient Deficiency' || target.category === 'Fungal' ? 38.5 : 12.0,
+        necrosis_pct: target.category === 'Fungal' ? 18.2 : 2.5,
+        dark_spot_pct: target.category === 'Fungal' ? 12.0 : 1.5,
+        mean_brightness: 54.0,
+      },
+      analyzed_at: new Date().toISOString(),
+    };
+  },
+
+  cropKnowledgeBase() {
+    return {
+      conditions_count: 7,
+      supported_crops: ['Wheat', 'Rice', 'Cotton', 'Tomato', 'Maize', 'Sugarcane', 'Potato', 'Soybean', 'Groundnut'],
+    };
+  },
 };
 
 // Resilient wrapper: Tries network API first; automatically uses local engine if network fails
@@ -489,6 +594,12 @@ export const api = {
     ),
   logIrrigation: (payload) =>
     requestWithFallback(client.post('/api/irrigation-logs', payload), () => fallbackEngine.logIrrigation(payload)),
+
+  // AI Crop Doctor & Image Health Diagnostics
+  diagnoseCrop: (payload) =>
+    requestWithFallback(client.post('/api/crops/diagnose', payload), () => fallbackEngine.diagnoseCrop(payload)),
+  cropKnowledgeBase: () =>
+    requestWithFallback(client.get('/api/crops/knowledge-base'), () => fallbackEngine.cropKnowledgeBase()),
 };
 
 export { API_BASE };

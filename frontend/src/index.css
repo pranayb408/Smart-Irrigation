@@ -1400,4 +1400,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .result-stat-grid {
     grid-template-columns: minmax(0, 1fr);
   }
+  .crop-doctor-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
 }

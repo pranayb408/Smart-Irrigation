@@ -81,3 +81,4 @@ def get_knowledge_base():
             for k, v in DIAGNOSTIC_KNOWLEDGE_BASE.items()
         ],
     }
+

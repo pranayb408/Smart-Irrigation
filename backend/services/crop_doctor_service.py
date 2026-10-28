@@ -362,3 +362,4 @@ def diagnose_crop_health(
         "preventative_measures": info["preventative_measures"],
         "analyzed_at": datetime.now(timezone.utc).isoformat(),
     }
+

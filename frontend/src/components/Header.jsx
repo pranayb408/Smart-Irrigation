@@ -44,6 +44,11 @@ export default function Header({ onMenu, activeField, fields = [], onSelectField
           title: t('settings.title', 'System Configuration & Irrigation Thresholds'),
           subtitle: t('settings.subtitle', 'Configure farm display preferences, irrigation triggers, and review offline USDA soil testing fallback procedures.'),
         };
+      case '/crop-doctor':
+        return {
+          title: t('cropDoctor.title', 'AI Crop Doctor & Foliage Advisor'),
+          subtitle: t('cropDoctor.subtitle', 'Upload or photograph your crop leaf to diagnose fungal diseases, pest damage, and nutrient deficiencies with tailored FAO-56 irrigation and treatment advice.'),
+        };
       default:
         return {
           title: t('nav.overview', 'Overview'),

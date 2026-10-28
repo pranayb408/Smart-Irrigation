@@ -198,7 +198,7 @@ export default function CropDoctor() {
       )}
 
       {/* Main Two-Column Layout */}
-      <div className="crop-doctor-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(320px, 460px) 1fr', gap: '22px' }}>
+      <div className="crop-doctor-grid">
         {/* Left Column: Image Upload & Inputs */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
           <Panel
@@ -293,7 +293,7 @@ export default function CropDoctor() {
             </div>
 
             {/* Form Fields: Crop & Plant Part */}
-            <div style={{ marginTop: '16px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+            <div className="form-row crop-form-row" style={{ marginTop: '16px' }}>
               <div className="form-group">
                 <label className="form-label" style={{ fontWeight: 750 }}>
                   {t('cropDoctor.cropType', 'Crop Type')}
@@ -676,3 +676,4 @@ export default function CropDoctor() {
     </div>
   );
 }
+

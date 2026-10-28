@@ -51,3 +51,4 @@ def test_crop_diagnose_json_rust():
     assert "Rust" in data["condition_name"]
     assert data["category"] == "Fungal"
     assert "sprinkler" in data["irrigation_advice"].lower() or "drip" in data["irrigation_advice"].lower()
+
